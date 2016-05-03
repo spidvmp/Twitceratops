@@ -20,9 +20,18 @@ public class TwitceratopsApp extends Application {
         /*
         TweetDAO tweetDAO = new TweetDAO(getApplicationContext());
         TweetMessage m = new TweetMessage(0,"hola","kkkkk",-3.55244f,40.1243512f);
+        TweetMessage m1 = new TweetMessage(0,"adios","kkkkk",-3.55244f,40.1243512f);
+        TweetMessage m2 = new TweetMessage(0,"cucu","kkkkk",-3.55244f,40.1243512f);
+        TweetMessage m3 = new TweetMessage(0,"trastras","kkkkk",-3.55244f,40.1243512f);
+
 
         tweetDAO.insert(m);
+        tweetDAO.insert(m1);
+        tweetDAO.insert(m2);
+        tweetDAO.insert(m3);
         */
+
+
 
     }
 

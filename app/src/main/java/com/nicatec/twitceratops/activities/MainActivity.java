@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.nicatec.twitceratops.R;
+import com.nicatec.twitceratops.fragments.MapFragment;
 import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
 import com.nicatec.twitceratops.model.TweetDAO;
 import com.nicatec.twitceratops.model.Tweets;
@@ -27,12 +28,10 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
 
     @Bind(R.id.button)
     Button button;
-
-    //@Bind(R.id.action_search)
-    //MenuItem actionSearch;
-
     @Bind(R.id.fragment_search_text_view)
     FrameLayout fragmentSearchView;
+    @Bind(R.id.activity_main_fragment_map)
+    FrameLayout fragmentMap;
 
     private SearchTextViewFragment searchTextViewFragment;
 
@@ -91,8 +90,10 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
         //quito el fragment
         FragmentManager fm = getSupportFragmentManager();
         if ( fm != null ){
+            MapFragment mf = new MapFragment();
             fm.beginTransaction()
                     .remove(searchTextViewFragment)
+                    .add(fragmentMap.getId(), mf)
                     .commit();
         }
 
