@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Twitceratops</string>
+    <string name="search_title">Search tweets</string>
+    <string name="location_placeholder">Nueva Localizacion</string>
 </resources>
