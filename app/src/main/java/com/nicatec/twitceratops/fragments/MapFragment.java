@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,10 @@ public class MapFragment extends Fragment {
     @Bind(R.id.fragmet_map_recycler_view)
     RecyclerView mapRecyclerView;
 
+    TweetDAO tweetDAO;
+    Tweets tweets;
+    TweeterMessageAdapter adapter;
+
     public MapFragment() {
         // Required empty public constructor
     }
@@ -41,12 +46,23 @@ public class MapFragment extends Fragment {
 
         //le pasamos el adaptador, se crea y le pasamos el contexto, tendremos que pasarle tb el listado de tweets
         //genero el listado de tweets
-        TweetDAO tweetDAO = new TweetDAO(getContext());
-        Tweets tweets = tweetDAO.query();
-        TweeterMessageAdapter adapter = new TweeterMessageAdapter(tweets, getActivity());
+        /*
+        tweetDAO = new TweetDAO(getContext());
+        tweets = tweetDAO.query();
+        adapter = new TweeterMessageAdapter(tweets, getActivity());
+        mapRecyclerView.setAdapter( adapter);
+        */
+        refreshView();
+        return view;
+    }
+
+    public void refreshView() {
+        Log.v("","RefreshView");
+        tweetDAO = new TweetDAO(getContext());
+        tweets = tweetDAO.query();
+        adapter = new TweeterMessageAdapter(tweets, getActivity());
         mapRecyclerView.setAdapter( adapter);
 
-        return view;
     }
 
 }

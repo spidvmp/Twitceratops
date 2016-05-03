@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
     FrameLayout fragmentMap;
 
     private SearchTextViewFragment searchTextViewFragment;
+    private MapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,14 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
         //al arrancar comienzo con lo qu haya en la BD
         TweetDAO tweetDAO = new TweetDAO(getApplicationContext());
         Tweets tweets = tweetDAO.query();
+
+        FragmentManager fm = getSupportFragmentManager();
+        if ( fm != null ){
+            mapFragment = new MapFragment();
+            fm.beginTransaction()
+                    .add(fragmentMap.getId(), mapFragment)
+                    .commit();
+        }
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
             MapFragment mf = new MapFragment();
             fm.beginTransaction()
                     .remove(searchTextViewFragment)
-                    .add(fragmentMap.getId(), mf)
                     .commit();
         }
 
@@ -108,5 +116,8 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+        //actualizo la vista
+        mapFragment.refreshView();
     }
 }

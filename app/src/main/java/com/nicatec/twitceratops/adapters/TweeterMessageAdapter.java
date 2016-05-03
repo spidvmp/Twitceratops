@@ -46,7 +46,6 @@ public class TweeterMessageAdapter extends RecyclerView.Adapter<MapIconViewHolde
 
     @Override
     public int getItemCount() {
-
         return tweets.size();
     }
 }
