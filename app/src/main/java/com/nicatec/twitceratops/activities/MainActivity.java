@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.nicatec.twitceratops.R;
+import com.nicatec.twitceratops.fragments.MapFragment;
 import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
 import com.nicatec.twitceratops.model.TweetDAO;
 import com.nicatec.twitceratops.model.Tweets;
@@ -27,14 +28,13 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
 
     @Bind(R.id.button)
     Button button;
-
-    //@Bind(R.id.action_search)
-    //MenuItem actionSearch;
-
     @Bind(R.id.fragment_search_text_view)
     FrameLayout fragmentSearchView;
+    @Bind(R.id.activity_main_fragment_map)
+    FrameLayout fragmentMap;
 
     private SearchTextViewFragment searchTextViewFragment;
+    private MapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,14 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
         //al arrancar comienzo con lo qu haya en la BD
         TweetDAO tweetDAO = new TweetDAO(getApplicationContext());
         Tweets tweets = tweetDAO.query();
+
+        FragmentManager fm = getSupportFragmentManager();
+        if ( fm != null ){
+            mapFragment = new MapFragment();
+            fm.beginTransaction()
+                    .add(fragmentMap.getId(), mapFragment)
+                    .commit();
+        }
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
         //quito el fragment
         FragmentManager fm = getSupportFragmentManager();
         if ( fm != null ){
+            MapFragment mf = new MapFragment();
             fm.beginTransaction()
                     .remove(searchTextViewFragment)
                     .commit();
@@ -107,5 +116,8 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+        //actualizo la vista
+        mapFragment.refreshView();
     }
 }

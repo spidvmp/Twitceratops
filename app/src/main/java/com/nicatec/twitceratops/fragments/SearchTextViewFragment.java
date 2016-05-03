@@ -46,6 +46,7 @@ public class SearchTextViewFragment extends Fragment {
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 boolean handled = false;
                 switch (i) {
+                    case 5:
                     case 6:
                         //han pulsado acpetar en el teclado
                         if ( searchedTextListened != null ) {
