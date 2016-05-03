@@ -43,6 +43,7 @@ public class MapFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mapRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        tweetDAO = new TweetDAO(getContext());
 
         //le pasamos el adaptador, se crea y le pasamos el contexto, tendremos que pasarle tb el listado de tweets
         //genero el listado de tweets
@@ -58,7 +59,7 @@ public class MapFragment extends Fragment {
 
     public void refreshView() {
         Log.v("","RefreshView");
-        tweetDAO = new TweetDAO(getContext());
+
         tweets = tweetDAO.query();
         adapter = new TweeterMessageAdapter(tweets, getActivity());
         mapRecyclerView.setAdapter( adapter);
