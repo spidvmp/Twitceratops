@@ -1,5 +1,7 @@
 package com.nicatec.twitceratops.activities;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,9 @@ import com.nicatec.twitceratops.R;
 import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
 import com.nicatec.twitceratops.model.TweetDAO;
 import com.nicatec.twitceratops.model.Tweets;
+
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -91,5 +96,16 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
                     .commit();
         }
 
+        Geocoder gc = new Geocoder(this, Locale.getDefault());
+            try {
+                List<Address> list = gc.getFromLocationName("Madrid", 1);
+                Log.v("","List=" + list.toString());
+                //Address address = list.get(0);
+                //Log.v("",address.toString());
+                //double lat = address.getLatitude();
+                //double lng = address.getLongitude();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 }
