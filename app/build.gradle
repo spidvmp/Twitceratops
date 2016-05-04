@@ -39,4 +39,5 @@ dependencies {
     compile 'org.twitter4j:twitter4j-async:4.0.2'
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
 }

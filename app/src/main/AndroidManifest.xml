@@ -38,6 +38,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Credenciales del mapa -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA2P4fFzuirq-EvzjvreNtkZje6piSOPtM" />
     </application>
 
 </manifest>
