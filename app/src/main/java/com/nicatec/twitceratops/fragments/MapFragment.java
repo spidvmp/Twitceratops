@@ -1,33 +1,44 @@
 package com.nicatec.twitceratops.fragments;
 
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 import com.nicatec.twitceratops.R;
 import com.nicatec.twitceratops.adapters.TweeterMessageAdapter;
 import com.nicatec.twitceratops.model.TweetDAO;
 import com.nicatec.twitceratops.model.Tweets;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
 
 
-    @Bind(R.id.fragmet_map_recycler_view)
-    RecyclerView mapRecyclerView;
+    private static GoogleMap map;
+    MapView mapView;
+
+    //@Bind(R.id.fragmet_map_recycler_view)
+    //RecyclerView mapRecyclerView;
+    //@Bind(R.id.fragment_map)
+    //Fragment fragmentMap;
 
     TweetDAO tweetDAO;
     Tweets tweets;
     TweeterMessageAdapter adapter;
+
+
 
     public MapFragment() {
         // Required empty public constructor
@@ -42,17 +53,13 @@ public class MapFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        mapRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //mapRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         tweetDAO = new TweetDAO(getContext());
 
-        //le pasamos el adaptador, se crea y le pasamos el contexto, tendremos que pasarle tb el listado de tweets
-        //genero el listado de tweets
-        /*
-        tweetDAO = new TweetDAO(getContext());
-        tweets = tweetDAO.query();
-        adapter = new TweeterMessageAdapter(tweets, getActivity());
-        mapRecyclerView.setAdapter( adapter);
-        */
+        //ponemos el mapa
+        //SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        //mapView = (MapView) fragmentMap;
+
         refreshView();
         return view;
     }
@@ -62,8 +69,20 @@ public class MapFragment extends Fragment {
 
         tweets = tweetDAO.query();
         adapter = new TweeterMessageAdapter(tweets, getActivity());
-        mapRecyclerView.setAdapter( adapter);
+        //mapRecyclerView.setAdapter( adapter);
 
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        LatLng a = new LatLng(40.42234, -3.6976);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(a,15));
+
+    }
 }
