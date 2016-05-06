@@ -9,11 +9,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activities.MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
 </RelativeLayout>
 -->
 
@@ -31,13 +26,22 @@ tools:context=".activities.MainActivity" >
     android:layout_width="match_parent"
     android:layout_height="wrap_content"></FrameLayout>
 
+
+    <fragment
+        android:id="@+id/fragment_map1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+    <!--
 <FrameLayout
     android:id="@+id/activity_main_fragment_map"
     android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="600dp">
 
 </FrameLayout>
+-->
 <Button
     android:text="Click"
     android:id="@+id/button"
@@ -47,3 +51,4 @@ tools:context=".activities.MainActivity" >
 
 
 </LinearLayout>
+
