@@ -2,6 +2,7 @@ package com.nicatec.twitceratops.activities;
 
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,7 +31,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements SearchTextViewFragment.SearchedTextListened, OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements SearchTextViewFragment.SearchedTextListened, OnMapReadyCallback, LocationListener {
 
     @Bind(R.id.button)
     Button button;
@@ -68,8 +70,11 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
 
 */
 
+        //pongo mi posicion
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map1);
         mapFragment.getMapAsync(this);
+
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -127,8 +132,12 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
 
 
             try {
+                //obtener las coordenadas del sition
                 List<Address> list = gc.getFromLocationName("castillo de simancas 2, Las Rozas Madrid", 1);
                 Log.v("", "List=" + list.toString());
+
+                //pasar las coordenadas a twitter y que se encargue de guardar en la BD
+
                 //Address address = list.get(0);
                 //Log.v("",address.toString());
                 //double lat = address.getLatitude();
@@ -138,7 +147,10 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
             }
 
             //actualizo la vista
-            mapFragment.refreshView();
+            //mapFragment.refreshView();
+            LatLng sydney = new LatLng(40.42234, -3.6976);
+            //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
         } else {
             Log.v("Geocoder","No hay servicio ecxterno");
         }
@@ -148,10 +160,12 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
     public void onMapReady(GoogleMap googleMap) {
 
         map = googleMap;
+        map.setMyLocationEnabled(true);
 
-        LatLng sydney = new LatLng(40.42234, -3.6976);
+
+        //LatLng sydney = new LatLng(40.42234, -3.6976);
         //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
+        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
         //map.animateCamera(CameraUpdateFactory.zoomTo(15));
         /*
         Marker aqui = map.addMarker(new MarkerOptions()
@@ -162,6 +176,13 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
         aqui.showInfoWindow();
         */
         Log.v("MAPREADY","MAPA CARGADO----------------------------");
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        Log.v("MainActivity","Nueva localizacion del mapa " + location);
 
     }
 }
