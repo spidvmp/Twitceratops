@@ -49,9 +49,10 @@ public class MainActivity extends AppCompatActivity implements SearchTextViewFra
 
         FragmentManager fm = getSupportFragmentManager();
         if ( fm != null ){
+
             mapFragment = new MapFragment();
             fm.beginTransaction()
-                    .add(fragmentMap.getId(), mapFragment)
+                    .add(R.id.activity_main_fragment_map , mapFragment)
                     .commit();
         }
 
