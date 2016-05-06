@@ -14,14 +14,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.nicatec.twitceratops.R;
 
 import butterknife.ButterKnife;
 
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
+//public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener
+   public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener{
 
 
     private static GoogleMap map;
@@ -59,8 +59,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         //tweetDAO = new TweetDAO(getContext());
 
         //ponemos el mapa
+        mapView = (MapView) view.findViewById(R.id.fragment_map);
+        mapView.onCreate(savedInstanceState);
         //SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
-        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.fragment_map);
+        //SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.fragment_map);
         //mapView = (MapView) fragmentMap;
         //mapFragment.getMapAsync(this);
 
@@ -71,6 +73,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public void refreshView() {
         Log.v("","RefreshView");
 
+        LatLng a = new LatLng(40.42234, -3.6976);
+        //MapFragment.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(a,15));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(a,15));
+
         //tweets = tweetDAO.query();
         //adapter = new TweeterMessageAdapter(tweets, getActivity());
         //mapRecyclerView.setAdapter( adapter);
@@ -80,7 +86,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     @Override
     public void onLocationChanged(Location location) {
-            Log.v("","Onlocationchanged");
+
+        Log.v("","Onlocationchanged");
     }
 
     @Override
@@ -92,4 +99,32 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(a,15));
 
     }
+
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
 }
