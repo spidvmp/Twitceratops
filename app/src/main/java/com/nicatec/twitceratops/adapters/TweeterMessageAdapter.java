@@ -2,6 +2,7 @@ package com.nicatec.twitceratops.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,8 @@ public class TweeterMessageAdapter extends RecyclerView.Adapter<MapIconViewHolde
     public void onBindViewHolder(MapIconViewHolder holder, int position) {
         //esto se llama cada vez que tiene que repintar las celdas, tantas veces como celdas hayan
         //esto habria que rehacer el que informacion le paso
+        Log.v("ADAPTER", "Envio " + tweets.get(position).getMessage());
+
         TweetMessage tm = tweets.get(position);
         holder.setTweetMessage(tm);
     }

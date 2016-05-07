@@ -6,6 +6,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,14 +23,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.nicatec.twitceratops.R;
+import com.nicatec.twitceratops.adapters.TweeterMessageAdapter;
 import com.nicatec.twitceratops.fragments.MapFragment;
 import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
+import com.nicatec.twitceratops.fragments.TweetsFragment;
 import com.nicatec.twitceratops.model.TweetDAO;
 import com.nicatec.twitceratops.model.Tweets;
 import com.nicatec.twitceratops.util.twitter.ConnectTwitterTask;
 import com.nicatec.twitceratops.util.twitter.TwitterHelper;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -70,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     @Bind(R.id.fragment_search_text_view)
     FrameLayout fragmentSearchView;
 
-    //@Bind(R.id.activity_main_fragment_map)
-    //FrameLayout fragmentMap;
+    @Bind(R.id.activity_main_fragment_map)
+    FrameLayout fragmentMap;
 
     private SearchTextViewFragment searchTextViewFragment;
     private MapFragment mapFragment;
@@ -79,8 +82,11 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     ConnectTwitterTask twitterTask;
     private static final int URL_LOADER = 0;
 
+    TweetDAO tweetDAO;
+    Tweets tweets;
 
-    private GoogleMap map;
+
+    public static GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +96,16 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
         ButterKnife.bind(this);
 
         //al arrancar comienzo con lo qu haya en la BD
-        TweetDAO tweetDAO = new TweetDAO(getApplicationContext());
-        Tweets tweets = tweetDAO.query();
+        //TweetDAO tweetDAO = new TweetDAO(this);
+        //Tweets tweets = tweetDAO.query();
+
+
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //pongo mi posicion
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map1);
+        mapFragment.getMapAsync(this);
 
         /*
 
@@ -107,26 +119,27 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_LONG).show();
 
         }
-
-/*
+*/
+    //con esto muestra lo que hay en la BD
         FragmentManager fm = getSupportFragmentManager();
         if ( fm != null ){
 
-            mapFragment = new MapFragment();
+            TweetsFragment tf = new TweetsFragment();
             fm.beginTransaction()
-                    .add(R.id.activity_main_fragment_map , mapFragment)
+                    .add(R.id.activity_main_fragment_map , tf)
                     .commit();
         }
 
+
+
+
+
+        /*
+        RecyclerView rv = new RecyclerView(this);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        TweeterMessageAdapter adapter = new TweeterMessageAdapter(tweets, this);
+        rv.setAdapter(adapter);
 */
-
-        //pongo mi posicion
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map1);
-        mapFragment.getMapAsync(this);
-
-
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,9 +181,10 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     public void OnNewLocationToSearch(String locationString) {
         Log.v("MainActivity","OnNewLocationToSearch recibe para buscar:" + locationString);
         //quito el fragment
+
         FragmentManager fm = getSupportFragmentManager();
         if ( fm != null ){
-            MapFragment mf = new MapFragment();
+            //MapFragment mf = new MapFragment();
             fm.beginTransaction()
                     .remove(searchTextViewFragment)
                     .commit();
@@ -202,6 +216,33 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
             //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
 
+
+
+            FragmentManager fm1 = getSupportFragmentManager();
+            if ( fm1 != null ){
+
+                TweetsFragment tf = new TweetsFragment();
+                fm.beginTransaction()
+                        .add(R.id.activity_main_fragment_map , tf)
+                        .commit();
+            }
+
+/*
+
+
+            tweets = tweetDAO.query();
+            //adapter = new TweeterMessageAdapter(tweets, getActivity());
+            //mapRecyclerView.setAdapter( adapter);
+            //recyclerView.setAdapter(adapter);
+
+
+
+
+            RecyclerView rv = new RecyclerView(this);
+            TweeterMessageAdapter adapter = new TweeterMessageAdapter(tweets, this);
+            rv.setAdapter(adapter);
+
+*/
             //De momento muestro aqui los tweets que tengo
         } else {
             Log.v("Geocoder","No hay servicio ecxterno");

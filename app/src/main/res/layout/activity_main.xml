@@ -33,7 +33,7 @@ tools:context=".activities.MainActivity" >
         android:layout_height="match_parent"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
-    <!--
+
 <FrameLayout
     android:id="@+id/activity_main_fragment_map"
     android:background="@color/colorPrimaryDark"
@@ -41,7 +41,7 @@ tools:context=".activities.MainActivity" >
     android:layout_height="600dp">
 
 </FrameLayout>
--->
+
 <Button
     android:text="Click"
     android:id="@+id/button"
