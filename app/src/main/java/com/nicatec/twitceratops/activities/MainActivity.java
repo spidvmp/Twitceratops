@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        /*
+
+         //con esto me conecto a twitter
         if (com.nicatec.twitceratops.util.NetworkHelper.isNetworkConnectionOK(new WeakReference<>(getApplication()))) {
             twitterTask = new ConnectTwitterTask(this);
             twitterTask.setListener(this);
@@ -198,6 +201,8 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
             LatLng sydney = new LatLng(40.42234, -3.6976);
             //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
+
+            //De momento muestro aqui los tweets que tengo
         } else {
             Log.v("Geocoder","No hay servicio ecxterno");
         }
@@ -651,12 +656,12 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
             }
 
             @Override
-            public void gotAvailableTrends(ResponseList<Location> locations) {
+            public void gotAvailableTrends(ResponseList<twitter4j.Location> locations) {
 
             }
 
             @Override
-            public void gotClosestTrends(ResponseList<Location> locations) {
+            public void gotClosestTrends(ResponseList<twitter4j.Location> locations) {
 
             }
 
@@ -714,6 +719,8 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     }
     @Override
     public void twitterConnectionFinished() {
+        Toast.makeText(this, getString(R.string.twiiter_auth_ok), Toast.LENGTH_SHORT).show();
+
 
     }
 }
