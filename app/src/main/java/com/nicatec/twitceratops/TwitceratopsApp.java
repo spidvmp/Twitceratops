@@ -4,8 +4,6 @@ import android.app.Application;
 
 import com.nicatec.twitceratops.model.DBConstants;
 import com.nicatec.twitceratops.model.DBHelper;
-import com.nicatec.twitceratops.model.TweetDAO;
-import com.nicatec.twitceratops.model.TweetMessage;
 
 /**
  * Created by vtx on 2/5/16.
@@ -19,7 +17,7 @@ public class TwitceratopsApp extends Application {
         DBHelper.configure(DBConstants.DBNAME, getApplicationContext());
 
 
-
+        /*
         TweetDAO tweetDAO = new TweetDAO(getApplicationContext());
         TweetMessage m = new TweetMessage(0,"hola","kkkkk",40.4043592f, -3.70274f);
         TweetMessage m1 = new TweetMessage(0,"adios","kkkkk",40.4243882f, -3.68200f);
@@ -34,7 +32,7 @@ public class TwitceratopsApp extends Application {
         tweetDAO.insert(m3);
         tweetDAO.insert(m4);
         tweetDAO.insert(m5);
-
+        */
 
 
 
