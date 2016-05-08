@@ -22,6 +22,10 @@ public class DBConstants {
 			KEY_LATITUDE,
 			KEY_LONGITUDE
 	};
+	public static final String[] centerCoordinate = {
+			KEY_LATITUDE,
+			KEY_LONGITUDE
+	};
 	public static final String SQL_CREATE_TWEETS_TABLE =
 			"create table " + TABLE_TWEETS
 					+ "( " + KEY_TWEET_ID

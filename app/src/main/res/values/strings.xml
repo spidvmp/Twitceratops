@@ -2,6 +2,9 @@
     <string name="app_name">Twitceratops</string>
     <string name="search_title">Search tweets</string>
     <string name="location_placeholder">Nueva Localizacion</string>
+    <string name="twiiter_auth_ok">Twitter authorization finished successfully</string>
+    <string name="authorize_this_app">Authorize this app</string>
+    <string name="error_network">It looks like there\'s no network connection right now, showing last tweets</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

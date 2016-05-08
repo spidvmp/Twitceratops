@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,6 +99,35 @@ public class TweetDAO {
         return tweets;
     }
 
+	public LatLng centerQuery() {
+		//HAce la media de las coordenadas y saca el punto central
+		LatLng center = null;
+		Cursor cursor = centerCursor();
+		if ( cursor != null && cursor.getCount() >0) {
+			cursor.moveToFirst();
+			//se supone 	ue solo hay un registro, ya que es la media de las coordenadas
+			do {
+				center = coordinatesFromCursor(cursor);
+			} while ( cursor.moveToNext());
+		}
+		return center;
+	}
+
+	public Cursor centerCursor(){
+		//hace la media de la latitud y la media de la longitud de todos los twits, de forma que tengo el punto medio
+		//para el mapa
+
+		Cursor c = db.getReadableDatabase().query(DBConstants.TABLE_TWEETS,
+				DBConstants.centerCoordinate,
+				null,
+				null,
+				null,
+				null,
+				null
+		);
+
+		return c;
+	}
     public Cursor queryCursor() {
         // select
 
@@ -140,6 +171,14 @@ public class TweetDAO {
 		TweetMessage tweetMessage = new TweetMessage(id, message, photo, lat, lon);
 
 		return tweetMessage;
+	}
+
+	public static LatLng coordinatesFromCursor(Cursor c){
+		assert  c != null;
+		float lat = c.getFloat(c.getColumnIndex(DBConstants.KEY_LATITUDE));
+		float lon = c.getFloat(c.getColumnIndex(DBConstants.KEY_LONGITUDE));
+
+		return new LatLng(lat, lon);
 	}
 
 }

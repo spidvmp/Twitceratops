@@ -1,11 +1,17 @@
 package com.nicatec.twitceratops.views;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.nicatec.twitceratops.R;
+import com.nicatec.twitceratops.activities.MainActivity;
 import com.nicatec.twitceratops.model.TweetMessage;
 
 import butterknife.Bind;
@@ -36,6 +42,15 @@ public class MapIconViewHolder extends RecyclerView.ViewHolder {
 
     public void setTweetMessage( TweetMessage m){
         //me pasan los datos completos y deberia bajarse la foto y configurar el mensaje cuando se pulse sobre el icono
-        nombre.setText(m.getMessage());
+        Log.v("ViewHolder","Mostrando " + m.getMessage());
+        GoogleMap mapilla = MainActivity.map;
+        if ( mapilla != null ) {
+            Marker marker = mapilla.addMarker( new MarkerOptions()
+                    .position(new LatLng(m.getLatitude(), m.getLongitude()))
+                    .title(m.getMessage())
+            );
+
+            nombre.setText(m.getMessage());
+        }
     }
 }

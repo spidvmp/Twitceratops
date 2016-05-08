@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.nicatec.twitceratops.model.DBConstants;
 import com.nicatec.twitceratops.model.DBHelper;
+import com.nicatec.twitceratops.model.TweetDAO;
+import com.nicatec.twitceratops.model.TweetMessage;
 
 /**
  * Created by vtx on 2/5/16.
@@ -17,19 +19,24 @@ public class TwitceratopsApp extends Application {
         DBHelper.configure(DBConstants.DBNAME, getApplicationContext());
 
 
-        /*
-        TweetDAO tweetDAO = new TweetDAO(getApplicationContext());
-        TweetMessage m = new TweetMessage(0,"hola","kkkkk",-3.55244f,40.1243512f);
-        TweetMessage m1 = new TweetMessage(0,"adios","kkkkk",-3.55244f,40.1243512f);
-        TweetMessage m2 = new TweetMessage(0,"cucu","kkkkk",-3.55244f,40.1243512f);
-        TweetMessage m3 = new TweetMessage(0,"trastras","kkkkk",-3.55244f,40.1243512f);
 
+        TweetDAO tweetDAO = new TweetDAO(getApplicationContext());
+        TweetMessage m = new TweetMessage(0,"hola","kkkkk",40.4043592f, -3.70274f);
+        TweetMessage m1 = new TweetMessage(0,"adios","kkkkk",40.4243882f, -3.68200f);
+        TweetMessage m2 = new TweetMessage(0,"cucu","kkkkk",40.439108f, -3.71302f);
+        TweetMessage m3 = new TweetMessage(0,"trastras","kkkkk",40.393490f, -3.70780f);
+        TweetMessage m4 = new TweetMessage(0,"saltaba","kkkkk",40.42933780f, -3.700067f);
+        TweetMessage m5 = new TweetMessage(0,"la rana","kkkkk",40.43410f, -3.720078f);
 
         tweetDAO.insert(m);
         tweetDAO.insert(m1);
         tweetDAO.insert(m2);
         tweetDAO.insert(m3);
-        */
+        tweetDAO.insert(m4);
+        tweetDAO.insert(m5);
+
+
+
 
 
 
