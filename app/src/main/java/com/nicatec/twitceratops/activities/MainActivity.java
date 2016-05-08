@@ -190,31 +190,32 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
                     .commit();
         }
 
-        Geocoder gc = new Geocoder(this, Locale.getDefault());
+        Geocoder gc = new Geocoder(this);
 
         if ( gc.isPresent() ) {
 
-
+            List<Address> list = null;
             try {
                 //obtener las coordenadas del sition
-                List<Address> list = gc.getFromLocationName("castillo de simancas 2, Las Rozas Madrid", 1);
-                Log.v("", "List=" + list.toString());
+                list = gc.getFromLocationName(locationString, 1);
 
-                //pasar las coordenadas a twitter y que se encargue de guardar en la BD
-
-                //Address address = list.get(0);
-                //Log.v("",address.toString());
-                //double lat = address.getLatitude();
-                //double lng = address.getLongitude();
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
+            if (list.size() == 1) {
+                //tengo alguna coordenada
+                if (list.get(0).hasLatitude() && list.get(0).hasLongitude()){
+                    LatLng position = new LatLng(list.get(0).getLatitude(), list.get(0).getLongitude());
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,13));
+                }
+            }
+
             //actualizo la vista
             //mapFragment.refreshView();
-            LatLng sydney = new LatLng(40.42234, -3.6976);
+            //LatLng sydney = new LatLng(40.42234, -3.6976);
             //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
+            //map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
 
 
 
@@ -764,4 +765,6 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
 
     }
+
+
 }
