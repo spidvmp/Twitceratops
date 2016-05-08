@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         //pongo mi posicion
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map1);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
         mapFragment.getMapAsync(this);
 
         /*
@@ -120,13 +120,14 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
         }
 */
+
     //con esto muestra lo que hay en la BD
         FragmentManager fm = getSupportFragmentManager();
         if ( fm != null ){
 
             TweetsFragment tf = new TweetsFragment();
             fm.beginTransaction()
-                    .add(R.id.activity_main_fragment_map , tf)
+                    .add(fragmentMap.getId() , tf)
                     .commit();
         }
 
@@ -208,6 +209,11 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
                 if (list.get(0).hasLatitude() && list.get(0).hasLongitude()){
                     LatLng position = new LatLng(list.get(0).getLatitude(), list.get(0).getLongitude());
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,13));
+
+                    TweetsFragment tf = new TweetsFragment();
+                    fm.beginTransaction()
+                            .add(fragmentMap.getId() , tf)
+                            .commit();
                 }
             }
 
@@ -217,16 +223,16 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
             //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             //map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
 
-
-
-            FragmentManager fm1 = getSupportFragmentManager();
-            if ( fm1 != null ){
+/*
+            FragmentManager fm = getSupportFragmentManager();
+            if ( fm != null ){
 
                 TweetsFragment tf = new TweetsFragment();
                 fm.beginTransaction()
-                        .add(R.id.activity_main_fragment_map , tf)
+                        .add(fragmentMap.getId() , tf)
                         .commit();
             }
+  */
 
 /*
 
