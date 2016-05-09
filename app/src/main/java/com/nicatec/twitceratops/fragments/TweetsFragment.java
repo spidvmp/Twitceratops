@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 
 import com.nicatec.twitceratops.R;
 import com.nicatec.twitceratops.adapters.TweeterMessageAdapter;
-import com.nicatec.twitceratops.model.TweetDAO;
 import com.nicatec.twitceratops.model.Tweets;
+import com.nicatec.twitceratops.model.TwitceratopsProviderUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,8 +40,12 @@ public class TweetsFragment extends Fragment {
 
         tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        /*
         TweetDAO tweetDAO = new TweetDAO(getContext());
         Tweets tweets = tweetDAO.query();
+        */
+        Tweets tweets = TwitceratopsProviderUtils.getAllTweets(getActivity());
+
         TweeterMessageAdapter adapter = new TweeterMessageAdapter(tweets, getContext());
         tweetsRecyclerView.setAdapter(adapter);
 

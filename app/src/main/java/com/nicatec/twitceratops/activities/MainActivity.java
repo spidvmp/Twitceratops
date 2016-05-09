@@ -6,8 +6,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +21,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.nicatec.twitceratops.R;
-import com.nicatec.twitceratops.adapters.TweeterMessageAdapter;
 import com.nicatec.twitceratops.fragments.MapFragment;
 import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
 import com.nicatec.twitceratops.fragments.TweetsFragment;
@@ -33,7 +30,6 @@ import com.nicatec.twitceratops.util.twitter.ConnectTwitterTask;
 import com.nicatec.twitceratops.util.twitter.TwitterHelper;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -253,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 */
             //De momento muestro aqui los tweets que tengo
         } else {
-            Log.v("Geocoder","No hay servicio ecxterno");
+            Log.v("Geocoder","No hay servicio externo");
         }
     }
 

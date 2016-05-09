@@ -40,6 +40,11 @@
             </intent-filter>
         </activity>
 
+        <!-- Content Provider -->
+        <provider
+            android:authorities="com.nicatec.twitceratops.provider"
+            android:name=".model.TwitceratopsProvider" />
+
         <!-- Credenciales del mapa -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
