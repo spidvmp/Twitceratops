@@ -38,6 +38,7 @@ public class TwitceratopsApp extends Application {
         //ContentResolver cr = getContentResolver();
         //Uri uri = cr.insert(TwitceratopsProvider.TWEETS_URI, TweetDAO.getContentValues(m));
         //m.setId(Long.parseLong(getIdFromUri(uri)));
+        //TwitceratopsProviderUtils.insertTweetMessage(getApplicationContext(), m);
 
 
 

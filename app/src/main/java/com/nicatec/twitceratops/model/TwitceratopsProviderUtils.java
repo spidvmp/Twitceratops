@@ -43,6 +43,7 @@ public class TwitceratopsProviderUtils {
             return null;
         }
 
+        //Uri uri = cr.insert(TwitceratopsProvider.TWEETS_URI, (new TweetDAO(context)).getContentValues(tweetMessage));
         Uri uri = cr.insert(TwitceratopsProvider.TWEETS_URI, (new TweetDAO(context)).getContentValues(tweetMessage));
         tweetMessage.setId(Long.parseLong(getIdFromUri(uri)));
         return uri;
