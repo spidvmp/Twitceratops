@@ -45,7 +45,7 @@ public class TweetsFragment extends Fragment implements LoaderManager.LoaderCall
 
         ButterKnife.bind(this,view);
 
-        tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
         /*
         TweetDAO tweetDAO = new TweetDAO(getContext());
@@ -86,6 +86,7 @@ public class TweetsFragment extends Fragment implements LoaderManager.LoaderCall
             tweets.add(tweetMessage);
         }
 
+        tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         TweeterMessageAdapter adapter = new TweeterMessageAdapter(tweets, getContext());
         tweetsRecyclerView.setAdapter(adapter);
 

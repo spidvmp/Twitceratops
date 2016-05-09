@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
             List<Address> list = null;
             try {
-                //obtener las coordenadas del sition
+                //obtener las coordenadas del sitio
                 list = gc.getFromLocationName(locationString, 1);
 
             } catch (Exception e) {
