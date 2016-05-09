@@ -1,6 +1,7 @@
 package com.nicatec.twitceratops.model;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -37,11 +38,7 @@ public class TwitceratopsProvider extends ContentProvider {
         return dbHelper;
     }
 
-    @Nullable
-    @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
-    }
+
 
     @Nullable
     @Override
@@ -54,13 +51,41 @@ public class TwitceratopsProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unssuported URI: " + uri);
         }
-        
+
     }
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         return null;
+    }
+    @Nullable
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        TweetDAO tweetDAO = new TweetDAO(getContext());
+        TweetMessage tweetMessage = new TweetMessage();
+        long id = tweetDAO.insert(tweetMessage);
+        if ( id > -1 ){
+            Uri insertedUri = null;
+            switch (urimatcher.match(uri)){
+                case ALL_TWEETS:
+                    insertedUri = ContentUris.withAppendedId(TWEETS_URI, id);
+                    break;
+                case SINGLE_TWEET:
+                    insertedUri = ContentUris.withAppendedId(TWEETS_URI, id);
+                    break;
+                default:
+                    break;
+            }
+
+            //notifico a los observadores que se ha insertado algo
+            getContext().getContentResolver().notifyChange(uri, null);
+            getContext().getContentResolver().notifyChange(insertedUri, null);
+
+            return insertedUri;
+        } else {
+            return null;
+        }
     }
 
     @Override

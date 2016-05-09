@@ -3,6 +3,7 @@ package com.nicatec.twitceratops.model;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -158,7 +159,7 @@ public class TweetDAO {
 
 	// convenience method
 
-	public static TweetMessage elementFromCursor(Cursor c) {
+	public @NonNull TweetMessage elementFromCursor(final @NonNull Cursor c) {
 		//me poasan un cursor donde hay un Tweetmessage, creo un objeto Tweet y le coloco los valores y lo devuelvo
 		assert c != null;
 

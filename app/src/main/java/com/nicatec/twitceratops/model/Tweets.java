@@ -10,12 +10,17 @@ public class Tweets {
     List<TweetMessage> tweets;
 
     public static Tweets createTweets(List<TweetMessage> tweets) {
-        Tweets myTweets = new Tweets();
+        Tweets myTweets = createTweets();
 
         for (TweetMessage t: tweets) {
             myTweets.add(t);
         }
 
+        return myTweets;
+    }
+
+    public static Tweets createTweets() {
+        Tweets myTweets = new Tweets();
         return myTweets;
     }
 
