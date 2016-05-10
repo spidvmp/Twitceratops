@@ -73,7 +73,7 @@ public class TweetsFragment extends Fragment implements LoaderManager.LoaderCall
                 break;
 
         }
-        return null;
+        return loader;
     }
 
     @Override

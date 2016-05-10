@@ -21,7 +21,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.nicatec.twitceratops.R;
-import com.nicatec.twitceratops.fragments.MapFragment;
 import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
 import com.nicatec.twitceratops.fragments.TweetsFragment;
 import com.nicatec.twitceratops.model.TweetDAO;
@@ -30,6 +29,7 @@ import com.nicatec.twitceratops.util.twitter.ConnectTwitterTask;
 import com.nicatec.twitceratops.util.twitter.TwitterHelper;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     FrameLayout fragmentMap;
 
     private SearchTextViewFragment searchTextViewFragment;
-    private MapFragment mapFragment;
+    //private MapFragment mapFragment;
 
     ConnectTwitterTask twitterTask;
     private static final int URL_LOADER = 0;
