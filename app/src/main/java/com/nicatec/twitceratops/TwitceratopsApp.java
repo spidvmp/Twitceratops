@@ -19,12 +19,12 @@ public class TwitceratopsApp extends Application {
 
         /*
         TweetDAO tweetDAO = new TweetDAO(getApplicationContext());
-        TweetMessage m = new TweetMessage(0,"hola","kkkkk",40.4043592f, -3.70274f);
-        TweetMessage m1 = new TweetMessage(0,"adios","kkkkk",40.4243882f, -3.68200f);
-        TweetMessage m2 = new TweetMessage(0,"cucu","kkkkk",40.439108f, -3.71302f);
-        TweetMessage m3 = new TweetMessage(0,"trastras","kkkkk",40.393490f, -3.70780f);
-        TweetMessage m4 = new TweetMessage(0,"saltaba","kkkkk",40.42933780f, -3.700067f);
-        TweetMessage m5 = new TweetMessage(0,"la rana","kkkkk",40.43410f, -3.720078f);
+        TweetMessage m = new TweetMessage(0,"Hoy comemos macarrones","http://wwww.nicatec.com/android/macarrones.jpg",40.4043592f, -3.70274f);
+        TweetMessage m1 = new TweetMessage(0,"Los albondigas en remojo","http://wwww.nicatec.com/android/albondigas.jpg",40.4243882f, -3.68200f);
+        TweetMessage m2 = new TweetMessage(0,"Una flor en el culo","http://wwww.nicatec.com/android/coliflor.jpg",40.439108f, -3.71302f);
+        TweetMessage m3 = new TweetMessage(0,"Como diria Julio, y lo sabes","http://wwww.nicatec.com/android/papaya.jpg",40.393490f, -3.70780f);
+        TweetMessage m4 = new TweetMessage(0,"De la abuela","http://wwww.nicatec.com/android/croquetas.jpg",40.42933780f, -3.700067f);
+        TweetMessage m5 = new TweetMessage(0,"Y con este postre se me acabo la imaginacion","http://wwww.nicatec.com/android/tiramisu.jpg",40.43410f, -3.720078f);
 
         tweetDAO.insert(m);
         tweetDAO.insert(m1);
@@ -33,17 +33,6 @@ public class TwitceratopsApp extends Application {
         tweetDAO.insert(m4);
         tweetDAO.insert(m5);
         */
-
-        //TweetMessage m = new TweetMessage(0,"xxxx","kkkkk",40.4049592f, -3.70574f);
-        //ContentResolver cr = getContentResolver();
-        //Uri uri = cr.insert(TwitceratopsProvider.TWEETS_URI, TweetDAO.getContentValues(m));
-        //m.setId(Long.parseLong(getIdFromUri(uri)));
-        //TwitceratopsProviderUtils.insertTweetMessage(getApplicationContext(), m);
-
-
-
-
-
 
     }
 

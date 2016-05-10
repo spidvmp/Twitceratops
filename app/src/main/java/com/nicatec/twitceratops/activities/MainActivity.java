@@ -23,8 +23,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.nicatec.twitceratops.R;
 import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
 import com.nicatec.twitceratops.fragments.TweetsFragment;
-import com.nicatec.twitceratops.model.TweetDAO;
-import com.nicatec.twitceratops.model.Tweets;
 import com.nicatec.twitceratops.util.UserDefaults;
 import com.nicatec.twitceratops.util.twitter.ConnectTwitterTask;
 import com.nicatec.twitceratops.util.twitter.TwitterHelper;
@@ -76,12 +74,12 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     //private MapFragment mapFragment;
 
     ConnectTwitterTask twitterTask;
-    private static final int URL_LOADER = 0;
+    //private static final int URL_LOADER = 0;
 
     int mapZoom = 13;
 
-    TweetDAO tweetDAO;
-    Tweets tweets;
+    //TweetDAO tweetDAO;
+    //Tweets tweets;
 
 
     public static GoogleMap map;
@@ -92,23 +90,14 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-
-        //al arrancar comienzo con lo qu haya en la BD
-        //TweetDAO tweetDAO = new TweetDAO(this);
-        //Tweets tweets = tweetDAO.query();
-
-
-
-
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //pongo mi posicion
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
         mapFragment.getMapAsync(this);
 
 
 
-        /*
+/*
 
          //con esto me conecto a twitter
         if (com.nicatec.twitceratops.util.NetworkHelper.isNetworkConnectionOK(new WeakReference<>(getApplication()))) {
@@ -132,16 +121,6 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
                     .commit();
         }
 
-
-
-
-
-        /*
-        RecyclerView rv = new RecyclerView(this);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        TweeterMessageAdapter adapter = new TweeterMessageAdapter(tweets, this);
-        rv.setAdapter(adapter);
-*/
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
