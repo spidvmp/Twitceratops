@@ -9,7 +9,7 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by vtx on 10/5/16.
  */
 public class UserDefaults {
-    //vamos a rememorar un poco a IOS
+    //IOS tira mucho
 
     private Context context;
     SharedPreferences preferences;

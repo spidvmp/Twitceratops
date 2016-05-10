@@ -32,7 +32,6 @@ public class TweetDAO {
 	public TweetDAO( Context context) {
 		this.context = new WeakReference<Context>(context);
 		db = DBHelper.getInstance();
-		//this.databaseName = databaseName;
 	}
 
 	public String getTableName() { return DBConstants.TABLE_TWEETS; }
@@ -47,15 +46,25 @@ public class TweetDAO {
 			throw new IllegalStateException("Context NULL");
 		}
 
-		// insert
-		//DBHelper db = DBHelper.getInstance(this.databaseName, context.get());
-
 		long id = db.getWritableDatabase().insert(getTableName(), null, this.getContentValues(message));
 		message.setId(id);
 		db.close();
 
-		Log.v("TweetDAO", "Insertado " + message.getMessage());
 		return id;
+	}
+
+	public long insert(ContentValues contentValues){
+		if ( contentValues == null ){
+			throw new IllegalArgumentException("Passing NULL values");
+		}
+		if (context.get() == null) {
+			throw new IllegalStateException("Context NULL");
+		}
+
+		long id = db.getWritableDatabase().insert(getTableName(),null,contentValues);
+		db.close();
+		return id;
+
 	}
 
 	public void deleteAll(){

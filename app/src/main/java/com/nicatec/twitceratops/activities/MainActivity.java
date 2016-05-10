@@ -30,7 +30,6 @@ import com.nicatec.twitceratops.util.twitter.ConnectTwitterTask;
 import com.nicatec.twitceratops.util.twitter.TwitterHelper;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -266,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     public void onMapReady(GoogleMap googleMap) {
 
         map = googleMap;
-        map.setMyLocationEnabled(true);
+        //map.setMyLocationEnabled(true);
 
         //compruebo si tengo una localizacion previa, eso lo tengo almacenado en
         UserDefaults defaults = new UserDefaults(this);

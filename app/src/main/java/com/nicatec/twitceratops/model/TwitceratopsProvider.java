@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 public class TwitceratopsProvider extends ContentProvider {
 
@@ -91,9 +90,7 @@ public class TwitceratopsProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         TweetDAO tweetDAO = new TweetDAO(getContext());
-Log.v("","name=" + values.get("name"));
-        TweetMessage tweetMessage = new TweetMessage(0,"dd","foto",0.0f,0.0f);
-        long id = tweetDAO.insert(tweetMessage);
+        long id = tweetDAO.insert(values);
         if ( id > -1 ){
             Uri insertedUri = null;
             switch (uriMatcher.match(uri)){

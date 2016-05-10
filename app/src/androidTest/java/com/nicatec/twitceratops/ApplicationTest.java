@@ -1,10 +1,15 @@
 package com.nicatec.twitceratops;
 
 import android.app.Application;
+import android.content.ContentValues;
 import android.test.ApplicationTestCase;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.nicatec.twitceratops.model.DBConstants;
+import com.nicatec.twitceratops.model.TweetDAO;
 import com.nicatec.twitceratops.model.TweetMessage;
 import com.nicatec.twitceratops.model.Tweets;
+import com.nicatec.twitceratops.util.UserDefaults;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -53,8 +58,39 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         tw.remove(m1);
         assertEquals(tw.size(),1);
 
+        tw.add(m1);
+
         tw.clear();
         assertEquals(tw.size(),0);
+
+    }
+
+    public void test_Creo_Mensaje_insertando_Con_ContentValues() {
+        final TweetMessage m = new TweetMessage(0,mens, photo, lat, lon);
+        ContentValues cv = TweetDAO.getContentValues(m);
+
+        assertEquals(m.getMessage(), cv.get(DBConstants.KEY_TWEET_NAME));
+
+        TweetDAO td = new TweetDAO(getContext());
+        long id = td.insert(cv);
+        assertTrue(id > 0);
+    }
+
+    public void test_Creo_Mensaje_insertando_Con_Clase() {
+        final TweetMessage m = new TweetMessage(0,mens, photo, lat, lon);
+        TweetDAO td = new TweetDAO(getContext());
+        long id = td.insert(m);
+        assertTrue(id > 0);
+    }
+
+    public void test_Grabo_Y_Leo_De_SharedPreferences(){
+        LatLng c = new LatLng(23.9874f, -34.987422f);
+
+        UserDefaults def = new UserDefaults(getContext());
+        def.setCoordinates(c);
+
+        LatLng c1 = def.getCoordinates();
+        assertEquals(c, c1);
 
     }
 }
