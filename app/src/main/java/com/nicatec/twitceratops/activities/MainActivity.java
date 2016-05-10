@@ -25,6 +25,7 @@ import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
 import com.nicatec.twitceratops.fragments.TweetsFragment;
 import com.nicatec.twitceratops.model.TweetDAO;
 import com.nicatec.twitceratops.model.Tweets;
+import com.nicatec.twitceratops.util.UserDefaults;
 import com.nicatec.twitceratops.util.twitter.ConnectTwitterTask;
 import com.nicatec.twitceratops.util.twitter.TwitterHelper;
 
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     ConnectTwitterTask twitterTask;
     private static final int URL_LOADER = 0;
 
+    int mapZoom = 13;
+
     TweetDAO tweetDAO;
     Tweets tweets;
 
@@ -103,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
         mapFragment.getMapAsync(this);
+
+
 
         /*
 
@@ -205,12 +210,16 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
                 //tengo alguna coordenada
                 if (list.get(0).hasLatitude() && list.get(0).hasLongitude()){
                     LatLng position = new LatLng(list.get(0).getLatitude(), list.get(0).getLongitude());
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,13));
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,mapZoom));
 
                     TweetsFragment tf = new TweetsFragment();
                     fm.beginTransaction()
                             .add(fragmentMap.getId() , tf)
                             .commit();
+
+                    //guardo la ultima posicion puesta
+                    UserDefaults def = new UserDefaults(this);
+                    def.setCoordinates(position);
                 }
             }
 
@@ -259,6 +268,13 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
         map = googleMap;
         map.setMyLocationEnabled(true);
 
+        //compruebo si tengo una localizacion previa, eso lo tengo almacenado en
+        UserDefaults defaults = new UserDefaults(this);
+
+        LatLng lastCoordinates = defaults.getCoordinates();
+        if ( lastCoordinates != null ){
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastCoordinates, mapZoom));
+        }
 
         //LatLng sydney = new LatLng(40.42234, -3.6976);
         //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
