@@ -3,6 +3,6 @@
 package com.nicatec.twitceratops.util.twitter;
 
 public class TwitterPrivateKeyAndSecret {
-    static String CONSUMER_KEY = "CcH62UBJOfyl9Pld7njRV8QUu";
-    static String CONSUMER_SECRET = "RXXW2vipYtnW8Q6o073gULieL90Ely1id6rYEfhWYytq1Y5uWB";
+    static String CONSUMER_KEY = "RKZtO7LhJtQFkjv4BJahnw3Fz";
+    static String CONSUMER_SECRET = "XtXqYjmAcwBRVeBKEHy167fA5iySomv68701nVqG7ilRtdQAdP";
 }

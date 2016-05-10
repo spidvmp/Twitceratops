@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     public void onMapReady(GoogleMap googleMap) {
 
         map = googleMap;
-        //map.setMyLocationEnabled(true);
+
 
         //compruebo si tengo una localizacion previa, eso lo tengo almacenado en
         UserDefaults defaults = new UserDefaults(this);
