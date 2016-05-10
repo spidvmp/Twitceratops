@@ -6,8 +6,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,17 +21,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.nicatec.twitceratops.R;
-import com.nicatec.twitceratops.adapters.TweeterMessageAdapter;
-import com.nicatec.twitceratops.fragments.MapFragment;
 import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
 import com.nicatec.twitceratops.fragments.TweetsFragment;
 import com.nicatec.twitceratops.model.TweetDAO;
 import com.nicatec.twitceratops.model.Tweets;
+import com.nicatec.twitceratops.util.UserDefaults;
 import com.nicatec.twitceratops.util.twitter.ConnectTwitterTask;
 import com.nicatec.twitceratops.util.twitter.TwitterHelper;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -77,10 +73,12 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     FrameLayout fragmentMap;
 
     private SearchTextViewFragment searchTextViewFragment;
-    private MapFragment mapFragment;
+    //private MapFragment mapFragment;
 
     ConnectTwitterTask twitterTask;
     private static final int URL_LOADER = 0;
+
+    int mapZoom = 13;
 
     TweetDAO tweetDAO;
     Tweets tweets;
@@ -101,11 +99,14 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
 
 
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         //pongo mi posicion
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
         mapFragment.getMapAsync(this);
+
+
 
         /*
 
@@ -197,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
             List<Address> list = null;
             try {
-                //obtener las coordenadas del sition
+                //obtener las coordenadas del sitio
                 list = gc.getFromLocationName(locationString, 1);
 
             } catch (Exception e) {
@@ -208,12 +209,16 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
                 //tengo alguna coordenada
                 if (list.get(0).hasLatitude() && list.get(0).hasLongitude()){
                     LatLng position = new LatLng(list.get(0).getLatitude(), list.get(0).getLongitude());
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,13));
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,mapZoom));
 
                     TweetsFragment tf = new TweetsFragment();
                     fm.beginTransaction()
                             .add(fragmentMap.getId() , tf)
                             .commit();
+
+                    //guardo la ultima posicion puesta
+                    UserDefaults def = new UserDefaults(this);
+                    def.setCoordinates(position);
                 }
             }
 
@@ -252,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 */
             //De momento muestro aqui los tweets que tengo
         } else {
-            Log.v("Geocoder","No hay servicio ecxterno");
+            Log.v("Geocoder","No hay servicio externo");
         }
     }
 
@@ -260,8 +265,15 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     public void onMapReady(GoogleMap googleMap) {
 
         map = googleMap;
-        map.setMyLocationEnabled(true);
+        //map.setMyLocationEnabled(true);
 
+        //compruebo si tengo una localizacion previa, eso lo tengo almacenado en
+        UserDefaults defaults = new UserDefaults(this);
+
+        LatLng lastCoordinates = defaults.getCoordinates();
+        if ( lastCoordinates != null ){
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastCoordinates, mapZoom));
+        }
 
         //LatLng sydney = new LatLng(40.42234, -3.6976);
         //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
