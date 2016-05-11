@@ -1,6 +1,5 @@
 package com.nicatec.twitceratops.activities;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,7 +25,6 @@ import com.nicatec.twitceratops.util.UserDefaults;
 import com.nicatec.twitceratops.util.twitter.ConnectTwitterTask;
 import com.nicatec.twitceratops.util.twitter.TwitterHelper;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -59,7 +56,7 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.OAuth2Token;
 import twitter4j.auth.RequestToken;
 
-public class MainActivity extends AppCompatActivity implements ConnectTwitterTask.OnConnectTwitterListener, SearchTextViewFragment.SearchedTextListened, OnMapReadyCallback, LocationListener {
+public class MainActivity extends AppCompatActivity implements ConnectTwitterTask.OnConnectTwitterListener, SearchTextViewFragment.SearchedTextListened, OnMapReadyCallback {
 
     @Bind(R.id.button)
     Button button;
@@ -89,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
         mapFragment.getMapAsync(this);
 
-
-        //con esto me conecto a twitter
+/*
+        //con esto me conecto a twitter, pero se queda colgado en la pagina de twitter cuando autoriza, se queda esperando
         if (com.nicatec.twitceratops.util.NetworkHelper.isNetworkConnectionOK(new WeakReference<>(getApplication()))) {
             twitterTask = new ConnectTwitterTask(this);
             twitterTask.setListener(this);
@@ -100,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_LONG).show();
 
         }
-
+*/
 
     //con esto muestra lo que hay en la BD
         FragmentManager fm = getSupportFragmentManager();
@@ -151,12 +148,9 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
     @Override
     public void OnNewLocationToSearch(String locationString) {
-        Log.v("MainActivity","OnNewLocationToSearch recibe para buscar:" + locationString);
-        //quito el fragment
-
+        //quito el fragment del texto a buscar
         FragmentManager fm = getSupportFragmentManager();
         if ( fm != null ){
-            //MapFragment mf = new MapFragment();
             fm.beginTransaction()
                     .remove(searchTextViewFragment)
                     .commit();
@@ -221,12 +215,6 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-
-        Log.v("MainActivity","Nueva localizacion del mapa " + location);
-
-    }
 
     private void launchTwitter() {
         AsyncTwitter twitter = new TwitterHelper(this).getAsyncTwitter();
