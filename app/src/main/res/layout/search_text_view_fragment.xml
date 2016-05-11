@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="fragments.SearchTextViewFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <EditText
         android:id="@+id/location_text_view_fragment_search_text_view"
         android:layout_width="match_parent"

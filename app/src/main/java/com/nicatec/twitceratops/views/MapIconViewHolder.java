@@ -26,10 +26,6 @@ public class MapIconViewHolder extends RecyclerView.ViewHolder {
 
     public MapIconViewHolder(View itemView) {
         super(itemView);
-
-        //ButterKnife.bind(this, itemView);
-
-
     }
 
     public void setTweetMessage(TweetMessage m, final Context context){
@@ -42,11 +38,7 @@ public class MapIconViewHolder extends RecyclerView.ViewHolder {
                 //final GoogleMap mapilla = MainActivity.map;
                 Bitmap originPhoto = download_Image(message.getPhotoUrl());
                 //le cambio el tamaño para que sea de 50x50
-                //try {
-                    final Bitmap ph = Bitmap.createScaledBitmap(originPhoto, 50, 50, true);
-                //}catch () {
-                //    final Bitmap ph = null;
-                //}
+                final Bitmap ph = Bitmap.createScaledBitmap(originPhoto, 50, 50, true);
 
                 Handler mainHandler = new Handler(context.getMainLooper());
 

@@ -1,8 +1,5 @@
 package com.nicatec.twitceratops.activities;
 
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +11,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,11 +20,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.nicatec.twitceratops.R;
 import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
 import com.nicatec.twitceratops.fragments.TweetsFragment;
+import com.nicatec.twitceratops.util.CoordinatesHelper;
 import com.nicatec.twitceratops.util.UserDefaults;
 import com.nicatec.twitceratops.util.twitter.ConnectTwitterTask;
 import com.nicatec.twitceratops.util.twitter.TwitterHelper;
 
-import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -60,7 +56,7 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.OAuth2Token;
 import twitter4j.auth.RequestToken;
 
-public class MainActivity extends AppCompatActivity implements ConnectTwitterTask.OnConnectTwitterListener, SearchTextViewFragment.SearchedTextListened, OnMapReadyCallback, LocationListener {
+public class MainActivity extends AppCompatActivity implements ConnectTwitterTask.OnConnectTwitterListener, SearchTextViewFragment.SearchedTextListened, OnMapReadyCallback {
 
     @Bind(R.id.button)
     Button button;
@@ -73,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
     private SearchTextViewFragment searchTextViewFragment;
     ConnectTwitterTask twitterTask;
+
 
     //zoom por defecto para el mapa
     int mapZoom = 13;
@@ -89,11 +86,8 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
         mapFragment.getMapAsync(this);
 
-
-
 /*
-
-         //con esto me conecto a twitter
+        //con esto me conecto a twitter, pero se queda colgado en la pagina de twitter cuando autoriza, se queda esperando
         if (com.nicatec.twitceratops.util.NetworkHelper.isNetworkConnectionOK(new WeakReference<>(getApplication()))) {
             twitterTask = new ConnectTwitterTask(this);
             twitterTask.setListener(this);
@@ -154,50 +148,46 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
     @Override
     public void OnNewLocationToSearch(String locationString) {
-        Log.v("MainActivity","OnNewLocationToSearch recibe para buscar:" + locationString);
-        //quito el fragment
-
+        //quito el fragment del texto a buscar
         FragmentManager fm = getSupportFragmentManager();
         if ( fm != null ){
-            //MapFragment mf = new MapFragment();
             fm.beginTransaction()
                     .remove(searchTextViewFragment)
                     .commit();
         }
 
-        Geocoder gc = new Geocoder(this);
+        //obtengo las coordenadas en segundo plano
+        final CoordinatesHelper ch = new CoordinatesHelper();
 
-        if ( gc.isPresent() ) {
-
-            List<Address> list = null;
-            try {
-                //obtener las coordenadas del sitio
-                list = gc.getFromLocationName(locationString, 1);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (list.size() == 1) {
-                //tengo alguna coordenada
-                if (list.get(0).hasLatitude() && list.get(0).hasLongitude()){
-                    LatLng position = new LatLng(list.get(0).getLatitude(), list.get(0).getLongitude());
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,mapZoom));
-
-                    TweetsFragment tf = new TweetsFragment();
-                    fm.beginTransaction()
-                            .add(fragmentMap.getId() , tf)
-                            .commit();
-
-                    //guardo la ultima posicion puesta
-                    UserDefaults def = new UserDefaults(this);
-                    def.setCoordinates(position);
+        ch.getCoordinatesOfALocation(locationString, this, new CoordinatesHelper.OnCoordinatesLocatedFinished() {
+            @Override
+            public void newCoordinatesLocated(final LatLng coordinate) {
+                //Esto se ejecuta en segundo plano
+                //compruebo si coordenadas es null, entonces hubo algun error
+                if ( coordinate == null){
+                    return;
                 }
-            }
 
-        } else {
-            Log.v("Geocoder","No hay servicio externo");
-        }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //tengo coordenadas, he de mover el mapa
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate,mapZoom));
+
+                        TweetsFragment tf = new TweetsFragment();
+                        FragmentManager fm = getSupportFragmentManager();
+                        if ( fm != null ) {
+                            fm.beginTransaction()
+                                    .add(fragmentMap.getId(), tf)
+                                    .commit();
+                        }
+
+                    }
+                });
+
+            }
+        });
+
     }
 
 
@@ -225,12 +215,6 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
 
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-
-        Log.v("MainActivity","Nueva localizacion del mapa " + location);
-
-    }
 
     private void launchTwitter() {
         AsyncTwitter twitter = new TwitterHelper(this).getAsyncTwitter();
