@@ -20,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.nicatec.twitceratops.R;
 import com.nicatec.twitceratops.fragments.SearchTextViewFragment;
 import com.nicatec.twitceratops.fragments.TweetsFragment;
@@ -71,17 +72,10 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
     FrameLayout fragmentMap;
 
     private SearchTextViewFragment searchTextViewFragment;
-    //private MapFragment mapFragment;
-
     ConnectTwitterTask twitterTask;
-    //private static final int URL_LOADER = 0;
 
+    //zoom por defecto para el mapa
     int mapZoom = 13;
-
-    //TweetDAO tweetDAO;
-    //Tweets tweets;
-
-
     public static GoogleMap map;
 
     @Override
@@ -201,43 +195,18 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
                 }
             }
 
-            //actualizo la vista
-            //mapFragment.refreshView();
-            //LatLng sydney = new LatLng(40.42234, -3.6976);
-            //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            //map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
-
-/*
-            FragmentManager fm = getSupportFragmentManager();
-            if ( fm != null ){
-
-                TweetsFragment tf = new TweetsFragment();
-                fm.beginTransaction()
-                        .add(fragmentMap.getId() , tf)
-                        .commit();
-            }
-  */
-
-/*
-
-
-            tweets = tweetDAO.query();
-            //adapter = new TweeterMessageAdapter(tweets, getActivity());
-            //mapRecyclerView.setAdapter( adapter);
-            //recyclerView.setAdapter(adapter);
-
-
-
-
-            RecyclerView rv = new RecyclerView(this);
-            TweeterMessageAdapter adapter = new TweeterMessageAdapter(tweets, this);
-            rv.setAdapter(adapter);
-
-*/
-            //De momento muestro aqui los tweets que tengo
         } else {
             Log.v("Geocoder","No hay servicio externo");
         }
+    }
+
+
+    public  static void addMark( MarkerOptions mark){
+
+        if ( map != null)
+            map.addMarker( mark );
+
+
     }
 
     @Override
@@ -253,20 +222,6 @@ public class MainActivity extends AppCompatActivity implements ConnectTwitterTas
         if ( lastCoordinates != null ){
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastCoordinates, mapZoom));
         }
-
-        //LatLng sydney = new LatLng(40.42234, -3.6976);
-        //map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
-        //map.animateCamera(CameraUpdateFactory.zoomTo(15));
-        /*
-        Marker aqui = map.addMarker(new MarkerOptions()
-
-                .position(sydney)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.app))
-                .title("Aqui"));
-        aqui.showInfoWindow();
-        */
-        Log.v("MAPREADY","MAPA CARGADO----------------------------");
 
     }
 

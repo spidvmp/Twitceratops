@@ -45,25 +45,15 @@ public class TweetsFragment extends Fragment implements LoaderManager.LoaderCall
 
         ButterKnife.bind(this,view);
 
-
-
-        /*
-        TweetDAO tweetDAO = new TweetDAO(getContext());
-        Tweets tweets = tweetDAO.query();
-        */
-
         //defino el loader para que se ejecute
         getLoaderManager().initLoader(0, null, this);
-
-        //Tweets tweets = TwitceratopsProviderUtils.getAllTweets(getActivity());
-
-
-
-
 
         return view;
     }
 
+    public void hola() {
+
+    }
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Loader<Cursor> loader = null;
